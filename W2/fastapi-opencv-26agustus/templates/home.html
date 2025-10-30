@@ -1,0 +1,180 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+<div class="container mt-4">
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="alert alert-primary" role="alert">
+        <h4 class="alert-heading"><i class="bi bi-info-circle-fill"></i> Selamat Datang!</h4>
+        <p>Aplikasi Pengolahan Citra Digital - Pilih operasi yang Anda inginkan di bawah ini.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0"><i class="bi bi-cloud-upload"></i> Unggah Citra Digital</h5>
+        </div>
+        <div class="card-body">
+          <form action="/upload/" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+              <label for="uploadFile" class="form-label">Pilih Gambar</label>
+              <input
+                name="file"
+                type="file"
+                accept="image/*"
+                class="form-control"
+                id="uploadFile"
+                required
+              />
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-upload"></i> Upload
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arithmetic Operations Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0"><i class="bi bi-calculator"></i> Operasi Aritmatika pada Citra</h5>
+        </div>
+        <div class="card-body">
+          <form action="/operation/" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+              <label for="operationFile" class="form-label">Pilih Gambar</label>
+              <input
+                name="file"
+                type="file"
+                accept="image/*"
+                class="form-control"
+                id="operationFile"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="operation" class="form-label">Pilih Operasi</label>
+              <select name="operation" class="form-select" id="operation" required>
+                <option value="add">➕ Tambah</option>
+                <option value="subtract">➖ Kurang</option>
+                <option value="max">⬆️ Max</option>
+                <option value="min">⬇️ Min</option>
+                <option value="inverse">🔄 Inverse</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="value" class="form-label">Nilai Operasi: <span id="valueOutput" class="badge bg-secondary">50</span></label>
+              <input
+                type="range"
+                class="form-range"
+                min="0"
+                max="100"
+                step="1"
+                name="value"
+                id="value"
+                value="50"
+              />
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success">
+                <i class="bi bi-play-fill"></i> Lakukan Operasi
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logic Operations Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-warning text-dark">
+          <h5 class="mb-0"><i class="bi bi-diagram-3"></i> Operasi Logika pada Citra</h5>
+        </div>
+        <div class="card-body">
+          <form action="/logic_operation/" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+              <label for="file1" class="form-label">Pilih Gambar 1</label>
+              <input
+                name="file1"
+                type="file"
+                accept="image/*"
+                class="form-control"
+                id="file1"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="file2" class="form-label">Pilih Gambar 2 <small class="text-muted">(untuk operasi AND dan XOR)</small></label>
+              <input name="file2" type="file" accept="image/*" class="form-control" id="file2" />
+            </div>
+            <div class="mb-3">
+              <label for="logicOperation" class="form-label">Pilih Operasi</label>
+              <select name="operation" class="form-select" id="logicOperation" required>
+                <option value="not">🚫 NOT</option>
+                <option value="and">🤝 AND</option>
+                <option value="xor">⚡ XOR</option>
+              </select>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-warning">
+                <i class="bi bi-play-fill"></i> Lakukan Operasi Logika
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistics Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0"><i class="bi bi-graph-up-arrow"></i> Statistik Citra</h5>
+        </div>
+        <div class="card-body">
+          <form action="/statistics/" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+              <label for="statsFile" class="form-label">Pilih Gambar</label>
+              <input
+                name="file"
+                type="file"
+                accept="image/*"
+                class="form-control"
+                id="statsFile"
+                required
+              />
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-info text-white">
+                <i class="bi bi-calculator-fill"></i> Hitung Statistik
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slider = document.getElementById("value");
+    const output = document.getElementById("valueOutput");
+    slider.addEventListener("input", function () {
+      output.textContent = slider.value;
+    });
+  </script>
+</div>
+{% endblock %}

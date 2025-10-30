@@ -1,0 +1,167 @@
+{% extends "base.html" %} {% block title %}Edge Detection{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="alert alert-primary" role="alert">
+        <h4 class="alert-heading"><i class="bi bi-bezier2"></i> Deteksi Tepi & Kontur</h4>
+        <p>Pilih operasi deteksi tepi yang Anda inginkan untuk memproses gambar.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Freeman Chain Code Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0"><i class="bi bi-link-45deg"></i> Freeman Chain Code</h5>
+        </div>
+        <div class="card-body">
+          <p class="text-muted mb-3">Deteksi kontur dan hasilkan kode rantai Freeman 8-arah dari gambar.</p>
+          <form action="/edge_detection/freeman/" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+              <label for="freemanFile" class="form-label">Pilih Gambar</label>
+              <input
+                name="file"
+                type="file"
+                accept="image/*"
+                class="form-control"
+                id="freemanFile"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="threshold" class="form-label">Threshold Value</label>
+              <input
+                type="number"
+                name="threshold"
+                class="form-control"
+                id="threshold"
+                value="127"
+                min="0"
+                max="255"
+                required
+              />
+              <small class="text-muted">Nilai threshold untuk binarisasi (0-255)</small>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-diagram-3"></i> Generate Freeman Chain Code
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Canny Edge Detection Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0"><i class="bi bi-bounding-box-circles"></i> Canny Edge Detection</h5>
+        </div>
+        <div class="card-body">
+          <p class="text-muted mb-3">Deteksi tepi menggunakan algoritma Canny dengan kontrol threshold.</p>
+          <form action="/edge_detection/canny/" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+              <label for="cannyFile" class="form-label">Pilih Gambar</label>
+              <input
+                name="file"
+                type="file"
+                accept="image/*"
+                class="form-control"
+                id="cannyFile"
+                required
+              />
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="low_threshold" class="form-label">Low Threshold</label>
+                <input
+                  type="number"
+                  name="low_threshold"
+                  class="form-control"
+                  id="low_threshold"
+                  value="50"
+                  min="0"
+                  max="255"
+                  required
+                />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="high_threshold" class="form-label">High Threshold</label>
+                <input
+                  type="number"
+                  name="high_threshold"
+                  class="form-control"
+                  id="high_threshold"
+                  value="150"
+                  min="0"
+                  max="255"
+                  required
+                />
+              </div>
+            </div>
+            <small class="text-muted d-block mb-3">High threshold biasanya 2-3x nilai low threshold</small>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success">
+                <i class="bi bi-border-outer"></i> Detect Edges (Canny)
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Integral Projection Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-warning text-dark">
+          <h5 class="mb-0"><i class="bi bi-bar-chart-steps"></i> Integral Projection</h5>
+        </div>
+        <div class="card-body">
+          <p class="text-muted mb-3">Hitung proyeksi horizontal dan vertikal dari gambar biner.</p>
+          <form action="/edge_detection/projection/" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+              <label for="projFile" class="form-label">Pilih Gambar</label>
+              <input
+                name="file"
+                type="file"
+                accept="image/*"
+                class="form-control"
+                id="projFile"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="proj_threshold" class="form-label">Threshold Value</label>
+              <input
+                type="number"
+                name="threshold"
+                class="form-control"
+                id="proj_threshold"
+                value="127"
+                min="0"
+                max="255"
+                required
+              />
+              <small class="text-muted">Nilai threshold untuk konversi ke biner</small>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-warning">
+                <i class="bi bi-graph-up"></i> Generate Projection
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
