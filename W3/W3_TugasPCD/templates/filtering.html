@@ -1,0 +1,211 @@
+{% extends "base.html" %} {% block title %}Image Filtering{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="alert alert-primary" role="alert">
+        <h4 class="alert-heading"><i class="bi bi-funnel-fill"></i> Filtering Citra Digital</h4>
+        <p>Pilih operasi filtering yang Anda inginkan untuk memproses gambar.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Convolution Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0"><i class="bi bi-grid-3x3"></i> Convolution Filter</h5>
+        </div>
+        <div class="card-body">
+          <p class="text-muted mb-3">Terapkan kernel convolution untuk smoothing, sharpening, atau edge detection.</p>
+          <form action="/filtering/convolution/" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+              <label for="convFile" class="form-label">Pilih Gambar</label>
+              <input
+                name="file"
+                type="file"
+                accept="image/*"
+                class="form-control"
+                id="convFile"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="kernelType" class="form-label">Pilih Kernel</label>
+              <select name="kernel_type" class="form-select" id="kernelType" required>
+                <option value="average">🔹 Average (Smoothing)</option>
+                <option value="sharpen">✨ Sharpen</option>
+                <option value="edge">📐 Edge Detection</option>
+              </select>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-play-fill"></i> Terapkan Convolution
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Zero Padding Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0"><i class="bi bi-bounding-box"></i> Zero Padding</h5>
+        </div>
+        <div class="card-body">
+          <p class="text-muted mb-3">Tambahkan border hitam (padding) di sekitar gambar.</p>
+          <form action="/filtering/padding/" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+              <label for="paddingFile" class="form-label">Pilih Gambar</label>
+              <input
+                name="file"
+                type="file"
+                accept="image/*"
+                class="form-control"
+                id="paddingFile"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="paddingSize" class="form-label">Ukuran Padding: <span id="paddingSizeOutput" class="badge bg-secondary">10</span> px</label>
+              <input
+                type="range"
+                class="form-range"
+                min="5"
+                max="100"
+                step="5"
+                name="padding_size"
+                id="paddingSize"
+                value="10"
+              />
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success">
+                <i class="bi bi-play-fill"></i> Terapkan Padding
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Frequency Filter Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-warning text-dark">
+          <h5 class="mb-0"><i class="bi bi-soundwave"></i> Frequency Filter</h5>
+        </div>
+        <div class="card-body">
+          <p class="text-muted mb-3">Terapkan filter domain frekuensi (Low Pass, High Pass, Band Pass).</p>
+          <form action="/filtering/filter/" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+              <label for="filterFile" class="form-label">Pilih Gambar</label>
+              <input
+                name="file"
+                type="file"
+                accept="image/*"
+                class="form-control"
+                id="filterFile"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="filterType" class="form-label">Pilih Filter</label>
+              <select name="filter_type" class="form-select" id="filterType" required>
+                <option value="low">⬇️ Low Pass Filter (Blur)</option>
+                <option value="high">⬆️ High Pass Filter (Sharpen)</option>
+                <option value="band">🎚️ Band Pass Filter</option>
+              </select>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-warning">
+                <i class="bi bi-play-fill"></i> Terapkan Filter
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fourier Transform Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0"><i class="bi bi-graph-up"></i> Fourier Transform</h5>
+        </div>
+        <div class="card-body">
+          <p class="text-muted mb-3">Konversi gambar ke domain frekuensi menggunakan Fourier Transform.</p>
+          <form action="/filtering/fourier/" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+              <label for="fourierFile" class="form-label">Pilih Gambar</label>
+              <input
+                name="file"
+                type="file"
+                accept="image/*"
+                class="form-control"
+                id="fourierFile"
+                required
+              />
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-info text-white">
+                <i class="bi bi-play-fill"></i> Terapkan Fourier Transform
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reduce Periodic Noise Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-danger text-white">
+          <h5 class="mb-0"><i class="bi bi-badge-wc"></i> Reduce Periodic Noise</h5>
+        </div>
+        <div class="card-body">
+          <p class="text-muted mb-3">Mengurangi noise periodik menggunakan teknik frequency domain filtering.</p>
+          <form action="/filtering/denoise/" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+              <label for="denoiseFile" class="form-label">Pilih Gambar</label>
+              <input
+                name="file"
+                type="file"
+                accept="image/*"
+                class="form-control"
+                id="denoiseFile"
+                required
+              />
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-danger">
+                <i class="bi bi-play-fill"></i> Reduce Noise
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const paddingSlider = document.getElementById("paddingSize");
+    const paddingOutput = document.getElementById("paddingSizeOutput");
+    paddingSlider.addEventListener("input", function () {
+      paddingOutput.textContent = paddingSlider.value;
+    });
+  </script>
+</div>
+{% endblock %}
