@@ -1,12 +1,26 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.log
 
-**/venv/
-**/venv/
-**/__pycache__/
-**/.ipynb_checkpoints/
+# === Virtual Environment ===
+venv/
+env/
+ENV/
+.venv/
+venv*/  # in case nested like W3_TugasPCD/venv
 
-*.__pycache__
-*.pyo
-*.DS_Store
+# === IDE & OS files ===
+.DS_Store
 .vscode/
 .idea/
 
+# === FastAPI / Uvicorn stuff ===
+*.sqlite3
+*.db
